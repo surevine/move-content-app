@@ -20,7 +20,7 @@ Parts of this program are based on:
 - Chai, Copyright (c) 2011-2014 Jake Luer jake@alogicalparadox.com under The MIT License
 - chai-as-promised, Copyright © 2012–2014 Domenic Denicola <domenic@domenicdenicola.com> and Copyright (C) 2004 Sam Hocevar <sam@hocevar.net>
 
-Thanks a lot to the owners of jive-sdk, jive software, node.js, jquery, twitter bootstrap and lodash for their efforts in their software modules, which helped us develop this app.
+Thanks a lot to the owners / contributors of jive-sdk, jive software, node.js, jquery, twitter bootstrap, lodash, Q, mustache, chai and chai-as-promised for their efforts in their software modules, which helped us develop this app.
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
