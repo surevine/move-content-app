@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module specificationVersion="1">
+    <ModulePrefs title="Move Content App"
+                 description="App to move content in bulk between two groups"
+                 author="Pawan Shah"
+                 author_affiliation="ThoughtWorks Inc."
+                 author_email="pawans@thoughtworks.com">
+        <!-- Commonly used features -->
+        <Require feature="jquery-1.6"/>
+        <Require feature="osapi"/>
+        <Require feature="opensocial-data" />
+        <Require feature="jive-core-v3" />
+        <Require feature="jive-core-v3-resolver" />
+
+        <Require feature="actions">
+            <Param name="action-contributions">
+                <![CDATA[
+                <action id="org.jivesoftware.movecontent.space"
+						path="jive/tabs/places/space"
+						label="Move Content"
+						view="movecontent"
+						icon="images/icon16x16.png"
+                />
+                <action id="org.jivesoftware.movecontent.group"
+						path="jive/tabs/places/group"
+						label="Move Content"
+						view="movecontent"
+						icon="images/icon16x16.png"
+                />
+              ]]>
+            </Param>
+        </Require>
+  </ModulePrefs>
+
+  <Content type="html" view="movecontent" href="movecontent.html" preferred_height="1000"/>
+
+
+</Module>

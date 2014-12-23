@@ -1,0 +1,112 @@
+<link rel="stylesheet" type="text/css" href="stylesheets/app/movecontent.css">
+<link rel="stylesheet" type="text/css" href="stylesheets/bootstrap/css/bootstrap.min.css" media="screen">
+<link rel="stylesheet" type="text/css" href="stylesheets/app/main.css" media="screen">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="javascripts/libraries/bootstrap.min.js"></script>
+<script src="javascripts/libraries/lodash.js"></script>
+<script src="javascripts/libraries/mustache.js" ></script>
+<script src="javascripts/libraries/q.js"></script>
+<script type="text/javascript" charset="utf-8" src="javascripts/app/jiveWrapper.js"></script>
+<script type="text/javascript" charset="utf-8" src="javascripts/app/messageViewHandler.js"></script>
+<script type="text/javascript" charset="utf-8" src="javascripts/app/view.js"></script>
+<script type="text/javascript" charset="utf-8" src="javascripts/app/validator.js"></script>
+<script type="text/javascript" charset="utf-8" src="javascripts/app/movecontent.js"></script>
+<form id="move-content" action="">
+    <div id="tw-move-content">
+        <div class="well">
+            <div class="row">
+                <div class="col-md-4 pull-left">
+                    <button id="target_place_picker" class="btn btn-primary" autofocus>Click to select target Place</button>
+                    <input type="text" id="targetPlace" value="" disabled="disabled" />
+                    <span id="app-message"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="well">
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div class="tab-pane active" id="move-selected-content-tab">
+                    <div id="content-types" class="btn-group">
+                    </div>
+                    <div>
+                        <input id="moveContent" type='submit' value="Move Content" class="btn btn-success"/>
+                        <input id="refreshContent"  value="Refresh Content" class="btn btn-success"/>
+                        <div id="pagination" class="btn-group pull-right">
+                        </div>
+                    </div>
+                    <div id="all-content">
+                        <div id="spinner">
+                            <img id="img-spinner" src="images/app/spinner.gif" alt="Processing..."/>
+                        </div>
+
+                        <table class='table'>
+                            <thead class="table-header">
+                            <tr><th>
+
+                            </th>
+                                <th>
+                                    <input type="checkbox" id="selectAllContent" checked class="checkbox"/>
+                                </th>
+                                <th>
+                                    <strong class='font-color-meta-light'>Title</strong>
+                                </th>
+                                <th>
+                                    <strong class='font-color-meta-light'>Author</strong>
+                                </th>
+                                <th>
+                                    <strong class='font-color-meta-light'>Latest Activity</strong>
+                                </th>
+                            </tr>
+                            </thead>
+
+                            <tbody id='content-body'>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<script id="content-list-template" type="x-tmpl-mustache">
+    {{#contentList}}
+    <tr class='content row' ><td><input class='contentCheck' id='{{contentId}}' type='checkbox' checked/> </td>
+        <td class='j-td-title'><a href='{{contentUrl}}'>{{contentTitle}}</a></td>
+        <td class='j-td-author'><a href='{{contentAuthorUrl}}' class='jive-username-link  jiveTT-hover-user'>{{contentAuthor}}</a></td>
+        <td class='j-td-date font-color-meta'>{{contentUpdatedDate}}</td>
+    </tr>
+    {{/contentList}}
+    {{^contentList}}
+    <tr><td colspan='4'><h3>No content to display</h3></td></tr>
+    {{/contentList}};
+
+</script>
+
+<script id="content-type-template" type="x-tmpl-mustache">
+
+{{#contentTypeList}}
+<label class='btn btn-primary'><input type='checkbox' checked='true' id = {{.}} class='contentTypeButton'> {{.}} </label>
+{{/contentTypeList}}
+
+</script>
+
+<script id="pagination-template" type="x-tmpl-mustache">
+    {{#prevIndex}}
+    <button id="prev-btn" class="btn btn-info" onclick="displayContentInCurrentPlace({{prevIndex}})">Prev</button>
+     {{/prevIndex}}
+
+     {{#nextIndex}}
+    <button id="next-btn" class="btn btn-info" onclick="displayContentInCurrentPlace({{nextIndex}})">Next</button>
+    {{/nextIndex}}
+</script>
+<script id="message-template" type="x-tmpl-mustache">
+    <label id='move-content-message' class='alert {{messageClass}}'>{{message}}</label>
+</script>

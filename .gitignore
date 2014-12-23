@@ -1,0 +1,9 @@
+node_modules
+.DS_Store
+*/.DS_Store
+.idea/*
+/.idea/
+*.log
+extension.zip
+db/
+extension_src/

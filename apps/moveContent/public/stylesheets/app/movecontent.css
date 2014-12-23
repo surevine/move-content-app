@@ -1,0 +1,84 @@
+label{
+    color: #5C5C5C;
+    display: block;
+    font-size: 1em;
+    font-weight: bold;
+    margin: 0 0 5px 2px;
+}
+
+h4 {
+    color: #1F1F1F !important;
+    font-size: 13px;
+}
+
+.checkbox{
+    padding-left: 4px;
+    padding-right: 4px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.content{
+    overflow: auto;
+    max-height: 355px;
+    margin-top: 10px;
+}
+
+#content-list{
+    overflow-y: auto;
+}
+
+table td, table th{
+    padding: 20px;
+    border-spacing: 10px;
+}
+
+table{
+    border-collapse: collapse;
+}
+
+.row{
+    border-bottom: 1px solid #F0F0F0;
+}
+
+.jive-error-box{
+    clear: none;
+}
+
+.well {
+    margin-bottom: 1px !important;
+}
+
+label#move-content-message {margin:10px;padding:5px;}
+
+#prev-btn{
+    margin-left: 10px;
+}
+#next-btn{
+    margin-left: 20px;
+}
+
+#refreshContent{
+    display:none;
+}
+
+#spinner {
+    position: fixed;
+    left: 50%;
+    margin-left: -100px; /* half width of the spinner gif */
+    margin-top: -50px; /* half height of the spinner gif */
+    text-align:center;
+    z-index:1234;
+    overflow: auto;
+    width: 200px; /* width of the spinner gif */
+    height: 200px; /*hight of the spinner gif +2px to fix IE8 issue */
+    opacity: 0.8;
+    display: none;
+}
+
+button#prev-btn {
+    margin: 5px;
+}
+button#next-btn {
+    margin: 5px;
+}
