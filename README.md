@@ -35,6 +35,9 @@ ideas
 events
 videos
 
+**Planned enhancements**
+Support for moving blogs between groups. Basic feature already tested locally.
+
 
 #How To...
 **Getting started with Jive node sdk**
@@ -80,7 +83,7 @@ If you do find any failure then just click the green color Refresh content butto
 
 #Some FYIs
 **Retaining the list of collaborators while moving a content.**
-- If there is a content having muliple collaborators, that content object will have an extra list parameter called authors (along with the default  author). If one of the users in the authors in inactive, jive's api gives an error code "peopleNotActiveAccount". 
+- If there is a content having multiple collaborators, that content object will have an extra list parameter called authors (along with the default  author). If one of the users in the authors in inactive, jive's api gives an error code "peopleNotActiveAccount". 
 - In this situation we can either remove all collaborators and just retain the author or find the inactive author and remove that from the authors list.
 - I decided to take the first approach as jive's default single content move feature removes all collaborators.
 - Please note that if the content only has an author and not collaborator and if this author is inactive, then jive api allows the content update.
