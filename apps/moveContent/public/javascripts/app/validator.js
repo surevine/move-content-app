@@ -16,7 +16,7 @@ var Validator = function () {
             deferred.reject("Target place should not be same as source");
         }
         else if (contentIds.length == 0) {
-            deferred.reject("No selected content to move!!!");
+            deferred.reject("No content selected to move");
         } else {
             deferred.resolve(true);
         }
