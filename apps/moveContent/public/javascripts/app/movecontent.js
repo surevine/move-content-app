@@ -1,5 +1,5 @@
 var validator = Validator();
-var SUPPORTED_CONTENT_TYPES = ["document", "discussion", "file", "idea", "poll"];
+var SUPPORTED_CONTENT_TYPES = ["document", "discussion", "file", "idea", "poll", "video", "event"];
 var ITEMS_PER_PAGE = 50;
 var isBlogsView = true;
 var sourcePlaceUrl;
