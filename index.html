@@ -44,9 +44,11 @@
 <h2>
 <a id="screenshots" class="anchor" href="#screenshots" aria-hidden="true"><span class="octicon octicon-link"></span></a>Screenshots</h2>
 
-<p><img src="https://community.jivesoftware.com/servlet/JiveServlet/downloadImage/38-9658-1200707/677-383/Screen+Shot+2014-12-23+at+3.36.15+PM.png" alt="App location and initial view"></p>
+<p><img src="https://community.jivesoftware.com/servlet/JiveServlet/downloadImage/38-9658-1202997/1551-900/Screen+Shot+2015-01-09+at+1.47.31+PM.png" alt="App location and initial view with two panes for blogs posts and al other content types"></p>
 
-<p><img src="https://community.jivesoftware.com/servlet/JiveServlet/downloadImage/38-9658-1200741/695-379/Screen+Shot+2014-12-23+at+3.36.30+PM.png" alt="Showing the progress / status post processing"></p>
+<p><img src="https://community.jivesoftware.com/servlet/JiveServlet/downloadImage/38-9658-1202998/1284-900/Screen+Shot+2015-01-09+at+1.47.43+PM.png" alt="Showing all other content types on second pane"></p>
+
+<p><img src="https://community.jivesoftware.com/servlet/JiveServlet/downloadImage/38-9658-1202999/1364-900/Screen+Shot+2015-01-09+at+2.37.38+PM.png" alt="Showing the progress / status post processing"></p>
 
 <h2>
 <a id="about-the-app" class="anchor" href="#about-the-app" aria-hidden="true"><span class="octicon octicon-link"></span></a>About the app</h2>
@@ -189,6 +191,14 @@ If you do find any failure then just click the green color Refresh content butto
 <li>So a content's category will not be supported in the new group as that group might not have it. </li>
 <li>Also jive's api gives correct error if we attempt to do this. So the app takes care of cleaning the categoried.</li>
 </ul>
+
+<h3>
+<a id="why-a-separate-pane-for-blog-posts" class="anchor" href="#why-a-separate-pane-for-blog-posts" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Why a separate pane for blog posts</strong>
+</h3>
+
+<p>Internally all content types in a place are directly linked with that group, but the blog posts are not.
+Blogs posts are linked to a place of type BLOG which is then linked to the parent group.
+So to avoid complexity, I have kept two views for blog posts and all other content types</p>
       </section>
       <footer>
         <p><small>Hosted on <a href="http://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
