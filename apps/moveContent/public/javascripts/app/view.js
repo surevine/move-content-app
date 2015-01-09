@@ -16,10 +16,14 @@ viewHandler = {
 
     showRefreshContentView : function () {
         $("#spinner").hide();
+        $("#move-other-content-tab").removeClass("disabledLink");
+        $("#move-blog-posts-tab").removeClass("disabledLink");
         $("#refreshContent").show().removeAttr("disabled");
     },
     disableAllButtonsWhileProcessingContent : function(){
         $("#spinner").show();
+        $("#move-other-content-tab").addClass("disabledLink");
+        $("#move-blog-posts-tab").addClass("disabledLink");
         $(".contentTypeButton").prop( "disabled", true );
         $("label.btn-primary").addClass("disabled");
         $("#moveContent").hide();
@@ -45,7 +49,8 @@ viewHandler = {
         $("#" + contentId).closest('tr').addClass("alert-success");
     },
 
-    displayContentErrorRow : function(contentId) {
+    displayContentErrorRow : function(contentId, message) {
+        $("#" + contentId).closest('tr').find('.rowMessage').html(JSON.stringify(message));
         $("#" + contentId).closest('tr').addClass("alert-danger");
     },
 
@@ -53,6 +58,10 @@ viewHandler = {
         $("#content-body").html(Mustache.render($('#content-list-template').html(),contentJson));
         $(".contentCheck").change(this.areAllContentsSelected);
         $("#spinner").hide();
+    },
+
+    resetContentList : function(){
+        $("#content-body").html("");
     },
 
     getSelectedContentIds : function(){

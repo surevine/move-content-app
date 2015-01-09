@@ -82,3 +82,8 @@ button#prev-btn {
 button#next-btn {
     margin: 5px;
 }
+
+a.disabledLink {
+    pointer-events: none;
+    cursor: default;
+}

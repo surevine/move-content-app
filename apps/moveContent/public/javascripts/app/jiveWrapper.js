@@ -1,6 +1,6 @@
 var jiveWrapper = {
 
-    getCurrentPlaceId : function () {
+    getCurrentPlaceUrl : function () {
         var deferred = Q.defer();
         var JIVE_GROUP_IDENTIFIER = 700;
         var JIVE_SPACE_IDENTIFIER = 14;
@@ -10,16 +10,20 @@ var jiveWrapper = {
 
             osapi.jive.corev3.places.get({entityDescriptor: [containerType, containerId]})
                 .execute(function (osapiResponse) {
-                    deferred.resolve(osapiResponse.list[0].placeID);
+                    var placeData = {
+                        "placeUrl":osapiResponse.list[0].resources.self.ref,
+                        "placeBlogUrl":osapiResponse.list[0].resources.blog.ref
+                    }
+                    deferred.resolve(placeData);
                 });
         });
         return deferred.promise;
     },
 
-    getContent : function (placeId, contentTypesToDisplay, itemsPerPage, paginationIndex) {
+    getContent : function (placeUrl, contentTypesToDisplay, itemsPerPage, paginationIndex) {
         var deferred = Q.defer();
         osapi.jive.corev3.contents.get({
-            "place": opensocial.getEnvironment()['jiveUrl'] + "/api/core/v3/places/" + placeId,
+            "place": placeUrl,
             "type": contentTypesToDisplay.join(","),
             "startIndex": paginationIndex,
             "count": itemsPerPage
@@ -32,21 +36,16 @@ var jiveWrapper = {
         return deferred.promise;
     },
 
-    updateContentParentPlace : function(contentId, targetPlaceId) {
+    updateContentParentPlace : function(contentId, targetPlaceUrl) {
         var deferred = Q.defer();
         var content_url = opensocial.getEnvironment()['jiveUrl'] + "/api/core/v3/contents/" + contentId
-
-        function hasInactiveCollaborator(response) {
-            return response.error.code == "peopleNotActiveAccount";
-        }
-
         osapi.jive.corev3.contents.get({"uri": content_url}).execute(function (content) {
-            content.parent = opensocial.getEnvironment()['jiveUrl'] + "/api/core/v3/places/" + targetPlaceId;
+            content.parent = targetPlaceUrl;
             content.categories = [];
             content.update({"minor": "true"}).execute(function (response) {
                 if (response.error) {
-                    if(hasInactiveCollaborator(response)){
-                        delete content.authors; // removing all authors instead of checking which one was inactive
+                    if(response.error.code == "peopleNotActiveAccount"){
+                        delete content.authors;
                         content.update({"minor": "true"}).execute(function (resp) {
                             if (resp.error)
                                 deferred.reject(resp.error)

@@ -11,6 +11,7 @@
 <script type="text/javascript" charset="utf-8" src="javascripts/app/view.js"></script>
 <script type="text/javascript" charset="utf-8" src="javascripts/app/validator.js"></script>
 <script type="text/javascript" charset="utf-8" src="javascripts/app/movecontent.js"></script>
+
 <form id="move-content" action="">
     <div id="tw-move-content">
         <div class="well">
@@ -24,50 +25,55 @@
         </div>
 
         <div class="well">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="" id="move-blog-posts-tab" data-toggle="tab">Move Blog Posts</a></li>
+                <li><a href="" id="move-other-content-tab" data-toggle="tab">Move other content</a></li>
+            </ul>
+
             <!-- Tab panes -->
             <div class="tab-content">
-                <div class="tab-pane active" id="move-selected-content-tab">
+
+                <div class="tab-pane active" id="move-other-content-pane">
                     <div id="content-types" class="btn-group">
                     </div>
-                    <div>
+                    <div class="container">
                         <input id="moveContent" type='submit' value="Move Content" class="btn btn-success"/>
                         <input id="refreshContent"  value="Refresh Content" class="btn btn-success"/>
                         <div id="pagination" class="btn-group pull-right">
                         </div>
-                    </div>
-                    <div id="all-content">
-                        <div id="spinner">
-                            <img id="img-spinner" src="images/app/spinner.gif" alt="Processing..."/>
+
+                        <div id="all-content">
+                            <div id="spinner">
+                                <img id="img-spinner" src="images/app/spinner.gif" alt="Processing..."/>
+                            </div>
+
+                            <table class='table'>
+                                <thead class="table-header">
+                                <tr><th>
+
+                                </th>
+                                    <th>
+                                        <input type="checkbox" id="selectAllContent" checked class="checkbox"/>
+                                    </th>
+                                    <th>
+                                        <strong class='font-color-meta-light'>Title</strong>
+                                    </th>
+                                    <th>
+                                        <strong class='font-color-meta-light'>Author</strong>
+                                    </th>
+                                    <th>
+                                        <strong class='font-color-meta-light'>Latest Activity</strong>
+                                    </th>
+                                </tr>
+                                </thead>
+
+                                <tbody id='content-body'>
+
+                                </tbody>
+
+                            </table>
                         </div>
-
-                        <table class='table'>
-                            <thead class="table-header">
-                            <tr><th>
-
-                            </th>
-                                <th>
-                                    <input type="checkbox" id="selectAllContent" checked class="checkbox"/>
-                                </th>
-                                <th>
-                                    <strong class='font-color-meta-light'>Title</strong>
-                                </th>
-                                <th>
-                                    <strong class='font-color-meta-light'>Author</strong>
-                                </th>
-                                <th>
-                                    <strong class='font-color-meta-light'>Latest Activity</strong>
-                                </th>
-                            </tr>
-                            </thead>
-
-                            <tbody id='content-body'>
-
-                            </tbody>
-
-                        </table>
-
                     </div>
-
                 </div>
 
             </div>
@@ -82,6 +88,7 @@
         <td class='j-td-title'><a href='{{contentUrl}}'>{{contentTitle}}</a></td>
         <td class='j-td-author'><a href='{{contentAuthorUrl}}' class='jive-username-link  jiveTT-hover-user'>{{contentAuthor}}</a></td>
         <td class='j-td-date font-color-meta'>{{contentUpdatedDate}}</td>
+        <td class='j-td-date font-color-meta rowMessage'></td>
     </tr>
     {{/contentList}}
     {{^contentList}}
