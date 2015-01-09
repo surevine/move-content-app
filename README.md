@@ -34,9 +34,7 @@ polls
 ideas
 events
 videos
-
-**Planned enhancements**
-Support for moving blogs between groups. Basic feature already tested locally.
+blog posts
 
 
 #How To...
