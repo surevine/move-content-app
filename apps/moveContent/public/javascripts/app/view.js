@@ -87,6 +87,10 @@ viewHandler = {
 
     isContentTypeChecked : function(contentType){
         return $("#"+contentType).is(":checked")
+    },
+
+    itemsPerPage : function(){
+        return $("#itemsPerPageOption").val();
     }
 }
 

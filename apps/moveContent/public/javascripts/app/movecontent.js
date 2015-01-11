@@ -1,7 +1,7 @@
 var validator = Validator();
 var SUPPORTED_CONTENT_TYPES = ["document", "discussion", "file", "idea", "poll", "video", "event"];
-var ITEMS_PER_PAGE = 50;
 var isBlogsView = true;
+var itemsPerPage;
 var sourcePlaceUrl;
 var targetPlaceUrl;
 var sourcePlaceBlogUrl;
@@ -16,7 +16,9 @@ var displayTargetPlacePicker = function () {
         viewHandler.displayTargetPlaceName(place.name);
     }
 
-    osapi.jive.corev3.places.requestPicker({
+    osapi.jive.corev3.search.requestPicker({
+        excludeContent : true,
+        excludePeople : true,
         success : function(place) {
             setTargetPlaceNameAndUrl(place)
         }
@@ -114,19 +116,21 @@ var displayContentInCurrentPlace = function (paginationIndex){
         var paginationJSON = {
         };
         if (data.links && data.links.next)
-            paginationJSON.nextIndex = (paginationIndex + ITEMS_PER_PAGE).toString();
+            paginationJSON.nextIndex = (paginationIndex + itemsPerPage).toString();
         if (data.links && data.links.previous)
-            paginationJSON.prevIndex = (paginationIndex - ITEMS_PER_PAGE).toString() ;
+            paginationJSON.prevIndex = (paginationIndex - itemsPerPage).toString() ;
         viewHandler.setupPaginationLinks(paginationJSON)
     }
 
     setAppView()
     setupCurrentGroupURL().then(function(){
+        itemsPerPage = viewHandler.itemsPerPage()
+        console.log("items ", itemsPerPage);
 
         if(!paginationIndex)
             paginationIndex=0;
 
-        jiveWrapper.getContent(isBlogsView?sourcePlaceBlogUrl:sourcePlaceUrl, getContentTypesToDisplay(), ITEMS_PER_PAGE, paginationIndex)
+        jiveWrapper.getContent(isBlogsView?sourcePlaceBlogUrl:sourcePlaceUrl, getContentTypesToDisplay(), itemsPerPage, paginationIndex)
             .then(
             function(data){
                 if(data.list.length != 0) {
@@ -166,6 +170,7 @@ $(document).ready(function(){
     $("#moveContent").click(processMoveContent);
     $("#target_place_picker").click(displayTargetPlacePicker);
     $("#refreshContent").click(refreshContent);
+    $("#itemsPerPageOption").change(refreshContent);
     $("#selectAllContent").change(viewHandler.selectAllContent);
     displayContentInCurrentPlace()
 });
