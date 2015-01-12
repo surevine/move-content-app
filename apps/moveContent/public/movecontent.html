@@ -39,15 +39,28 @@
                     <div class="container">
                         <input id="moveContent" type='submit' value="Move Content" class="btn btn-success"/>
                         <input id="refreshContent"  value="Refresh Content" class="btn btn-success"/>
-                        <div id="itemsPerPage" class="btn-group pull-right">
-                            <select id="itemsPerPageOption">
-                                <option value="25"> 25 </option>
-                                <option value="50"> 50 </option>
-                                <option value="100"> 100 </option>
-                            </select>
+                        <div id="filters" class="btn-group pull-right">
+                            <div class="pull-left" id="itemsPerPage">
+                                <select id="itemsPerPageOption" class="form-control ">
+                                    <option value="25"> 25 </option>
+                                    <option value="50"> 50 </option>
+                                    <option value="100"> 100 </option>
+                                </select>
+                            </div>
+                            <div class="pull-left" id="sortOption">
+                                <select id="sortByOption" class="form-control">
+                                    <option value="latestActivityAsc"> Oldest Activity First </option>
+                                    <option value="latestActivityDesc"> Latest Activity First </option>
+                                    <option value="dateCreatedAsc"> Oldest Created First </option>
+                                    <option value="dateCreatedDesc"> Latest Created First </option>
+                                    <option value="titleAsc"> Title </option>
+                                </select>
+                            </div>
+                            <div id="pagination" class="pull-right">
+                            </div>
+
                         </div>
-                        <div id="pagination" class="btn-group pull-right">
-                        </div>
+
 
                         <div id="all-content">
                             <div id="spinner">

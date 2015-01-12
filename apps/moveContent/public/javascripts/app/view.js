@@ -91,6 +91,10 @@ viewHandler = {
 
     itemsPerPage : function(){
         return $("#itemsPerPageOption").val();
+    },
+
+    sortByOption : function(){
+        return $("#sortByOption").val();
     }
 }
 

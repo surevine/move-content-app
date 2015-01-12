@@ -1,7 +1,6 @@
 var validator = Validator();
 var SUPPORTED_CONTENT_TYPES = ["document", "discussion", "file", "idea", "poll", "video", "event"];
 var isBlogsView = true;
-var itemsPerPage;
 var sourcePlaceUrl;
 var targetPlaceUrl;
 var sourcePlaceBlogUrl;
@@ -112,7 +111,7 @@ var displayContentInCurrentPlace = function (paginationIndex){
         }
     };
 
-    var showPaginationLinks = function(data) {
+    var showPaginationLinks = function(data, itemsPerPage) {
         var paginationJSON = {
         };
         if (data.links && data.links.next)
@@ -124,18 +123,19 @@ var displayContentInCurrentPlace = function (paginationIndex){
 
     setAppView()
     setupCurrentGroupURL().then(function(){
-        itemsPerPage = viewHandler.itemsPerPage()
+        var itemsPerPage = viewHandler.itemsPerPage();
+        var sortBy = viewHandler.sortByOption();
         console.log("items ", itemsPerPage);
 
         if(!paginationIndex)
             paginationIndex=0;
 
-        jiveWrapper.getContent(isBlogsView?sourcePlaceBlogUrl:sourcePlaceUrl, getContentTypesToDisplay(), itemsPerPage, paginationIndex)
+        jiveWrapper.getContent(isBlogsView?sourcePlaceBlogUrl:sourcePlaceUrl, getContentTypesToDisplay(), itemsPerPage, sortBy, paginationIndex)
             .then(
             function(data){
                 if(data.list.length != 0) {
                     viewHandler.showContent(getContentListJson(data));
-                    showPaginationLinks(data);
+                    showPaginationLinks(data, itemsPerPage);
                     gadgets.window.adjustHeight();
                 }
                 else {
@@ -171,6 +171,7 @@ $(document).ready(function(){
     $("#target_place_picker").click(displayTargetPlacePicker);
     $("#refreshContent").click(refreshContent);
     $("#itemsPerPageOption").change(refreshContent);
+    $("#sortByOption").change(refreshContent);
     $("#selectAllContent").change(viewHandler.selectAllContent);
     displayContentInCurrentPlace()
 });

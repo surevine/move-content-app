@@ -20,13 +20,14 @@ var jiveWrapper = {
         return deferred.promise;
     },
 
-    getContent : function (placeUrl, contentTypesToDisplay, itemsPerPage, paginationIndex) {
+    getContent : function (placeUrl, contentTypesToDisplay, itemsPerPage, sortBy, paginationIndex) {
         var deferred = Q.defer();
         osapi.jive.corev3.contents.get({
             "place": placeUrl,
             "type": contentTypesToDisplay.join(","),
             "startIndex": paginationIndex,
-            "count": itemsPerPage
+            "count": itemsPerPage,
+            "sort": sortBy
         }).execute(function (response) {
             if (response.error)
                 deferred.reject(response);
