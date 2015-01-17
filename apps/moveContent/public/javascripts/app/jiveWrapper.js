@@ -37,31 +37,23 @@ var jiveWrapper = {
         return deferred.promise;
     },
 
-    updateContentParentPlace : function(contentId, targetPlaceUrl) {
+    updateContentParentPlace : function(contentId, targetPlaceId) {
         var deferred = Q.defer();
-        var content_url = opensocial.getEnvironment()['jiveUrl'] + "/api/core/v3/contents/" + contentId
-        osapi.jive.corev3.contents.get({"uri": content_url}).execute(function (content) {
-            content.parent = targetPlaceUrl;
-            content.categories = [];
-            content.update({"minor": "true"}).execute(function (response) {
-                if (response.error) {
-                    if(response.error.code == "peopleNotActiveAccount"){
-                        delete content.authors;
-                        content.update({"minor": "true"}).execute(function (resp) {
-                            if (resp.error)
-                                deferred.reject(resp.error)
-                            else
-                                deferred.resolve();
-                        })
-                    } else {
-                        deferred.reject(response.error)
-                    }
-                }
-                else
-                    deferred.resolve();
-            })
+        osapi.jive.connects.post({
+            authz:"signed",
+            alias: "moveContentService",
+            headers : { "Content-Type" : "application/json" },
+            format: 'json',
+            "body": {"groupId": targetPlaceId ,"contentId": contentId}
+        }).execute(function (response) {
+            if (response.error)
+                deferred.reject(response);
+            else
+                deferred.resolve(response);
         });
+
         return deferred.promise;
+
     }
 }
 

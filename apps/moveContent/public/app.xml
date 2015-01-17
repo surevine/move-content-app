@@ -11,6 +11,10 @@
         <Require feature="opensocial-data" />
         <Require feature="jive-core-v3" />
         <Require feature="jive-core-v3-resolver" />
+        <Require feature="jive-connects-v1">
+            <Param name="alias:moveContentService|title:Move Content Service">jive:service://moveContentService</Param>
+        </Require>
+
 
         <Require feature="actions">
             <Param name="action-contributions">
