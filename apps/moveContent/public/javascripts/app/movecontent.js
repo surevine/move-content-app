@@ -1,5 +1,5 @@
 var validator = Validator();
-var SUPPORTED_CONTENT_TYPES = ["document", "discussion", "file", "idea", "poll", "video", "event"];
+var SUPPORTED_CONTENT_TYPES = ["document", "discussion", "file", "idea", "poll", "video", "event", "incidentReport"];
 var isBlogsView = true;
 var sourcePlaceUrl;
 var targetPlaceUrl;
