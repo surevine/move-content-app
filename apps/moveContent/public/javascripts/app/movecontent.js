@@ -96,26 +96,39 @@ var displayContentInCurrentPlace = function (paginationIndex){
         return deferred.promise;
     }
 
-    var getExtProps = function(contentItem) {
-        var extPropsRequest = contentItem.getExtProps();
-        var props;
-        if (extPropsRequest) {
-            extPropsRequest.execute(function(response) {
-                if (response.error) {
-                    console.log(response.error.code + ' ' + response.error.message);
-                } else {
-                    props = response;
-                }
-            });
+    var getIHMName = function(ihmLevel) {
+        switch(ihmLevel) {
+            case 1:
+                return 'Red';
+            case 2:
+                return 'Amber';
+            case 3:
+                return 'Green';
+            case 4:
+                return 'White';
+            default:
+                return 'Unknown';
         }
-        return props;
+    }
+
+    var populateIHM = function(contentList) {
+        console.log(contentList);
+        contentList.forEach(function(contentItem) {
+            // todo: replace with call to get actual ihm value
+            var ihmLevel = Math.floor(Math.random() * 4) + 1;
+
+            var contentID = contentItem.contentID;
+            var ihmName = getIHMName(ihmLevel);
+
+            $('#ihmcell-' + contentID).removeClass('ihm-loading');
+            $('#ihmcell-' + contentID).addClass('ihm-' + ihmLevel);
+            $('#ihmcell').append(ihmName);
+        })
     }
 
     var getContentListJson = function (items) {
         return {
             contentList: _.map(items.list, function(item) {
-                var extProps = getExtProps(item);
-                // todo: extract the ihm value from the ext props and stick it on the returned object below
                 return {
                     "contentId": item.contentID,
                     "contentUrl": item.resources.html.ref,
@@ -151,9 +164,12 @@ var displayContentInCurrentPlace = function (paginationIndex){
             .then(
             function(data){
                 if(data.list.length != 0) {
-                    viewHandler.showContent(getContentListJson(data));
+                    var contentList = getContentListJson(data);
+                    viewHandler.showContent(contentList);
                     showPaginationLinks(data, itemsPerPage);
                     gadgets.window.adjustHeight();
+
+                    populateIHM(contentList);
                 }
                 else {
                     viewHandler.showContent({});
