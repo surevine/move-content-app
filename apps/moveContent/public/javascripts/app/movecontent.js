@@ -96,9 +96,26 @@ var displayContentInCurrentPlace = function (paginationIndex){
         return deferred.promise;
     }
 
+    var getExtProps = function(contentItem) {
+        var extPropsRequest = contentItem.getExtProps();
+        var props;
+        if (extPropsRequest) {
+            extPropsRequest.execute(function(response) {
+                if (response.error) {
+                    console.log(response.error.code + ' ' + response.error.message);
+                } else {
+                    props = response;
+                }
+            });
+        }
+        return props;
+    }
+
     var getContentListJson = function (items) {
         return {
             contentList: _.map(items.list, function(item) {
+                var extProps = getExtProps(item);
+                // todo: extract the ihm value from the ext props and stick it on the returned object below
                 return {
                     "contentId": item.contentID,
                     "contentUrl": item.resources.html.ref,
