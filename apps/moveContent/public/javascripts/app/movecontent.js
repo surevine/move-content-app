@@ -164,12 +164,12 @@ var displayContentInCurrentPlace = function (paginationIndex){
             .then(
             function(data){
                 if(data.list.length != 0) {
-                    var contentList = getContentListJson(data);
-                    viewHandler.showContent(contentList);
+                    var contentListObject = getContentListJson(data);
+                    viewHandler.showContent(contentListObject);
                     showPaginationLinks(data, itemsPerPage);
                     gadgets.window.adjustHeight();
 
-                    populateIHM(contentList);
+                    populateIHM(contentListObject.contentList);
                 }
                 else {
                     viewHandler.showContent({});
