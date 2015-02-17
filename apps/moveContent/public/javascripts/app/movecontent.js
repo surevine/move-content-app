@@ -126,7 +126,11 @@ var displayContentInCurrentPlace = function (paginationIndex){
         if (contentItem.getExtProps) {
             var call = contentItem.getExtProps().execute(function(properties) {
                 ihmLevel = parseInt(properties.content.handlingLevel) || null
-                if (!ihmLevel) return
+                if (!ihmLevel) {
+                    turnOffLoading()
+                    setTableCellName('<em>Unknown</em>')
+                    return
+                }
                 var ihmName = getIHMName(ihmLevel)
 
                 turnOffLoading()
