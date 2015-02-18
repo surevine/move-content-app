@@ -1,6 +1,7 @@
 <link rel="stylesheet" type="text/css" href="stylesheets/app/movecontent.css">
 <link rel="stylesheet" type="text/css" href="stylesheets/bootstrap/css/bootstrap.min.css" media="screen">
 <link rel="stylesheet" type="text/css" href="stylesheets/app/main.css" media="screen">
+<link rel="stylesheet" type="text/css" href="stylesheets/app/ihm.css" media="screen">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script src="javascripts/libraries/bootstrap.min.js"></script>
 <script src="javascripts/libraries/lodash.js"></script>
@@ -79,6 +80,9 @@
                                         <strong class='font-color-meta-light'>Title</strong>
                                     </th>
                                     <th>
+                                        <strong class='font-color-meta-light'>TLP</strong>
+                                    </th>
+                                    <th>
                                         <strong class='font-color-meta-light'>Author</strong>
                                     </th>
                                     <th>
@@ -106,6 +110,7 @@
     {{#contentList}}
     <tr class='content row' ><td><input class='contentCheck' id='{{contentId}}' type='checkbox' checked/> </td>
         <td class='j-td-title'><a href='{{contentUrl}}'>{{contentTitle}}</a></td>
+        <td id='ihmcell-{{contentId}}' class='j-td-ihm ihm-loading'>Loading...</td>
         <td class='j-td-author'><a href='{{contentAuthorUrl}}' class='jive-username-link  jiveTT-hover-user'>{{contentAuthor}}</a></td>
         <td class='j-td-date font-color-meta'>{{contentUpdatedDate}}</td>
         <td class='j-td-date font-color-meta rowMessage'></td>

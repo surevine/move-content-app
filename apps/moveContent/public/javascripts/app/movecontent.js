@@ -96,28 +96,80 @@ var displayContentInCurrentPlace = function (paginationIndex){
         return deferred.promise;
     }
 
+    var getIHMName = function(ihmLevel) {
+        switch(ihmLevel) {
+            case 1:
+                return 'Red';
+            case 2:
+                return 'Amber';
+            case 3:
+                return 'Green';
+            case 4:
+                return 'White';
+            default:
+                return 'Unknown';
+        }
+    }
+
+    var setIhmBarContent = function(contentItem) {
+
+        var contentId = contentItem.contentID
+        var tableCell = $('#ihmcell-' + contentId)
+
+        var turnOffLoading = function() {
+            tableCell.removeClass('ihm-loading')
+        }
+        var setTableCellName = function(ihmName) {
+            tableCell.html(ihmName)
+        }
+
+        if (contentItem.getExtProps) {
+            var call = contentItem.getExtProps().execute(function(properties) {
+                ihmLevel = parseInt((properties.content || {}).handlingLevel) || null
+                if (!ihmLevel) {
+                    turnOffLoading()
+                    setTableCellName('<em>Unknown</em>')
+                    return
+                }
+                var ihmName = getIHMName(ihmLevel)
+
+                turnOffLoading()
+                tableCell.addClass('ihm-' + ihmLevel)
+                setTableCellName(ihmName)
+            })
+        } else {
+            turnOffLoading()
+            setTableCellName('<em>Unknown</em>')
+        }
+    }
+
+    var populateIHM = function(contentList) {
+        contentList.forEach(setIhmBarContent)
+    }
+
     var getContentListJson = function (items) {
         return {
             contentList: _.map(items.list, function(item) {
                 return {
-                    "contentId": item.contentID,
-                    "contentUrl": item.resources.html.ref,
-                    "contentTitle": item.subject,
-                    "contentAuthor": item.author.displayName,
-                    "contentAuthorUrl": item.author.resources.html.ref,
-                    "contentUpdatedDate": new Date(item.updated).toDateString()
+                    contentId: item.contentID,
+                    contentUrl: item.resources.html.ref,
+                    contentTitle: item.subject,
+                    contentAuthor: item.author.displayName,
+                    contentAuthorUrl: item.author.resources.html.ref,
+                    contentUpdatedDate: new Date(item.updated).toDateString()
                 }
             })
         }
     };
 
     var showPaginationLinks = function(data, itemsPerPage) {
-        var paginationJSON = {
-        };
-        if (data.links && data.links.next)
-            paginationJSON.nextIndex = (paginationIndex + itemsPerPage).toString();
-        if (data.links && data.links.previous)
-            paginationJSON.prevIndex = (paginationIndex - itemsPerPage).toString() ;
+        var paginationJSON = {}
+        if (data.links && data.links.next) {
+            paginationJSON.nextIndex = (paginationIndex + itemsPerPage).toString()
+        }
+        if (data.links && data.links.previous) {
+            paginationJSON.prevIndex = (paginationIndex - itemsPerPage).toString()
+        }
         viewHandler.setupPaginationLinks(paginationJSON)
     }
 
@@ -125,26 +177,30 @@ var displayContentInCurrentPlace = function (paginationIndex){
     setupCurrentGroupURL().then(function(){
         var itemsPerPage = viewHandler.itemsPerPage();
         var sortBy = viewHandler.sortByOption();
-        console.log("items ", itemsPerPage);
-
-        if(!paginationIndex)
-            paginationIndex=0;
+        if (!paginationIndex) {
+            paginationIndex = 0
+        }
 
         jiveWrapper.getContent(isBlogsView?sourcePlaceBlogUrl:sourcePlaceUrl, getContentTypesToDisplay(), itemsPerPage, sortBy, paginationIndex)
             .then(
             function(data){
-                if(data.list.length != 0) {
-                    viewHandler.showContent(getContentListJson(data));
+                if (data.list.length !== 0) {
+                    var contentListObject = getContentListJson(data);
+                    viewHandler.showContent(contentListObject);
                     showPaginationLinks(data, itemsPerPage);
                     gadgets.window.adjustHeight();
+
+                    populateIHM(data.list);
                 }
                 else {
                     viewHandler.showContent({});
                 }
             },
-            function(err){
-                viewHandler.showContent({});
-            })
+            function(error) {
+                viewHandler.showContent({})
+            })/*.fail(function(error) {
+                console.log(error)
+            })*/
     })
 };
 
